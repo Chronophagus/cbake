@@ -63,9 +63,9 @@ impl Builder {
         }
 
         if !self.sources.is_empty() {
-            cmake_lists += &generator::comment("-------- Warning: This section will be overwritten by cmake_project utility. Don't change it manually --------");
+            cmake_lists += &generator::comment("-------- Warning: This section will be overwritten by cbake utility. Don't change it manually if you will use it --------");
             cmake_lists += &generator::add_executable(&self.sources);
-            cmake_lists += &generator::comment("---------------------------------------------------------------------------------------------------------------");
+            cmake_lists += &generator::comment("--------------------------------------------------------------------------------------------------------------------------");
         }
 
         cmake_lists
