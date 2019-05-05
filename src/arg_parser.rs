@@ -8,7 +8,7 @@ pub fn parse_command() -> Command {
 }
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "cmake_project", about = "Let me do cmake for you")]
+#[structopt(name = "cbake", about = "Let me bake cmake for you")]
 pub enum Command {
     #[structopt(name = "init")]
     /// UNIMPLEMENTED!
