@@ -18,7 +18,7 @@ pub fn min_ver(version: &Version) -> String {
 }
 
 pub fn set_var(var_name: &str, var_val: &str) -> String {
-    format!("set({}, {})\n", var_name, var_val)
+    format!("set({} {})\n", var_name, var_val)
 }
 
 pub fn project(name: &str) -> String {
