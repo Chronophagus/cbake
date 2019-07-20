@@ -132,7 +132,7 @@ fn exec_run(release: bool) -> ExecutionResult {
 
     let mut executable_path = project_layout::Simple::new(project_path).get_build_path();
 
-    executable_path.push("Debug");
+    if release == false { executable_path.push("Debug") } else { executable_path.push("Release"); }
     executable_path.push(project_name);
 
     std::process::Command::new(executable_path)

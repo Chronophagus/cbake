@@ -22,7 +22,7 @@ pub fn version() -> Result<Version, Box<dyn std::error::Error>> {
     let version: Version = ver_pattern
         .find_iter(&command_output)
         .next() // Get first match
-        .unwrap() // If command executed without errors the version string must exist in the command output
+        .unwrap() // If command executed without errors the version string must be in the command output
         .as_str() // Convert regex::Match to str
         .parse()?; // Convert to Version type
 
@@ -36,13 +36,11 @@ pub fn init(project_dir: &PathBuf, build_dir: &PathBuf) -> Result<(), ExecutionE
     arg1.push(build_dir.as_os_str());
     arg2.push(project_dir.as_os_str());
 
-    let child = Command::new("cmake")
+    let output = Command::new("cmake")
         .arg(arg1)
         .arg(arg2)
         .stdout(Stdio::inherit())
-        .spawn()?;
-
-    let output = child.wait_with_output()?;
+        .output()?;
 
     if output.status.success() {
         Ok(())
@@ -53,13 +51,11 @@ pub fn init(project_dir: &PathBuf, build_dir: &PathBuf) -> Result<(), ExecutionE
 }
 
 pub fn build(build_dir: &PathBuf) -> Result<(), ExecutionError> {
-    let child = Command::new("cmake")
+    let output = Command::new("cmake")
         .arg("--build")
         .arg(build_dir.as_os_str())
         .stdout(Stdio::inherit())
-        .spawn()?;
-
-    let output = child.wait_with_output()?;
+        .output()?;
 
     if output.status.success() {
         Ok(())
@@ -93,14 +89,12 @@ impl InitExtBuilder {
         arg1.push(build_dir.as_os_str());
         arg2.push(source_dir.as_os_str());
 
-        let child = Command::new("cmake")
+        let output = Command::new("cmake")
             .args(optional_args)
             .arg(arg1)
             .arg(arg2)
             .stdout(Stdio::inherit())
-            .spawn()?;
-
-        let output = child.wait_with_output()?;
+            .output()?;
 
         if output.status.success() {
             Ok(())
